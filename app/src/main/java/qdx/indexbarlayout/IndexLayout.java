@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.FloatRange;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -33,7 +34,7 @@ public class IndexLayout extends FrameLayout {
     private boolean isShowCircle;
     private String indexName = "";
     private IndexBar indexBar;
-    private int indexBarWidth = dp2px(30);
+    private int indexBarWidth = dp2px(50);
     private float indexBarHeightRatio = 1;
 
     public IndexLayout(Context context) {
@@ -227,7 +228,7 @@ public class IndexLayout extends FrameLayout {
     /**
      * indexBar 高度占父容器的比率，默认1
      */
-    public void setIndexBarHeightRatio(float indexBarHeightRatio) {
+    public void setIndexBarHeightRatio(@FloatRange(from = 0.0f,to = 1.0f) float indexBarHeightRatio) {
         this.indexBarHeightRatio = indexBarHeightRatio;
     }
 

@@ -4,7 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,7 +16,8 @@ import java.util.List;
 
 
 public class IndexBar extends View {
-    private Paint mPaint;
+    private final String TAG = "qdx";
+    private Paint mPaint, mBarBgPaint;
     private int textSpan;//每个index占据空间
     private IndexChangeListener listener;
     private List<String> indexsList;
@@ -21,6 +25,13 @@ public class IndexBar extends View {
     private int selTextColor = Color.BLACK;
     private int norTextColor = Color.GRAY;
     private float yAxis;//文字y轴方向的基线
+
+    private RectF mIndexBarBg;
+    //默认的背景色
+    private int norBarBgColor = ContextCompat.getColor(getContext(), android.R.color.transparent);
+    //按下时的背景色，默认为透明
+    private int selBarBgColor = ContextCompat.getColor(getContext(), android.R.color.transparent);
+    private int mIndexBarBgRadius = 0;
 
     public IndexBar(Context context) {
         this(context, null);
@@ -36,6 +47,11 @@ public class IndexBar extends View {
     }
 
     private void init() {
+        //设置背景属性
+        mBarBgPaint = new Paint();
+        mBarBgPaint.setColor(norBarBgColor);
+        mBarBgPaint.setAntiAlias(true);
+        //设置文字属性
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(norTextColor);
         mPaint.setTextSize(textSize);
@@ -52,6 +68,13 @@ public class IndexBar extends View {
         if (indexsList != null && indexsList.size() > 0) {
             textSpan = h / (indexsList.size() + 1);
         }
+        //背景大小
+        mIndexBarBg = new RectF(
+                0,
+                0,
+                w,
+                h
+        );
     }
 
     @Override
@@ -61,6 +84,8 @@ public class IndexBar extends View {
                 canvas.drawText(indexsList.get(i), getWidth() / 2, textSpan * (i + 1) + yAxis, mPaint);
             }
         }
+        //绘制背景
+        canvas.drawRoundRect(mIndexBarBg, mIndexBarBgRadius, mIndexBarBgRadius, mBarBgPaint);
 
     }
 
@@ -74,12 +99,12 @@ public class IndexBar extends View {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mPaint.setColor(selTextColor);
+                mBarBgPaint.setColor(selBarBgColor);
                 invalidate();
             case MotionEvent.ACTION_MOVE:
                 if (event.getY() < textSpan / 2 || (event.getY() - textSpan / 2) > textSpan * indexsList.size()) {
                     return true;
                 }
-
                 int position = (int) ((event.getY() - textSpan / 2) / textSpan * 1.0f);
                 if (position >= 0 && position < indexsList.size()) {
                     ((IndexLayout) getParent()).drawCircle(event.getY(), indexsList.get(position));
@@ -92,6 +117,7 @@ public class IndexBar extends View {
             case MotionEvent.ACTION_UP:
                 ((IndexLayout) getParent()).dismissCircle();
                 mPaint.setColor(norTextColor);
+                mBarBgPaint.setColor(norBarBgColor);
                 invalidate();
                 break;
         }
@@ -124,5 +150,21 @@ public class IndexBar extends View {
     public void setNorTextColor(int norTextColor) {
         this.norTextColor = norTextColor;
         mPaint.setColor(norTextColor);
+    }
+
+    public int getNorBarBgColor() {
+        return norBarBgColor;
+    }
+
+    public void setNorBarBgColor(@ColorInt int norBarBgColor) {
+        this.norBarBgColor = norBarBgColor;
+    }
+
+    public int getSelBarBgColor() {
+        return selBarBgColor;
+    }
+
+    public void setSelBarBgColor(@ColorInt int selBarBgColor) {
+        this.selBarBgColor = selBarBgColor;
     }
 }

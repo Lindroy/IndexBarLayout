@@ -64,12 +64,13 @@ public class MainActivity extends AppCompatActivity {
                 heads.add(car.getInitial());
             }
         }
-        indexLayout.setIndexBarHeightRatio(0.9f);
+        indexLayout.setIndexBarHeightRatio(0.7f);
         indexLayout.getIndexBar().setIndexsList(heads);
-        indexLayout.setCircleTextColor(Color.RED);
-        indexLayout.setCircleRadius(200);
-        indexLayout.setCirCleTextSize(150);
+        indexLayout.setCircleTextColor(Color.WHITE);
+        indexLayout.setCircleRadius(120);
+        indexLayout.setCirCleTextSize(80);
         indexLayout.setCircleColor(ContextCompat.getColor(this, R.color.circle_bg));
+        indexLayout.getIndexBar().setSelBarBgColor(Color.parseColor("#45000000"));
         indexLayout.getIndexBar().setIndexChangeListener(new IndexBar.IndexChangeListener() {
             @Override
             public void indexChanged(String indexName) {
