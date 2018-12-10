@@ -160,6 +160,7 @@ public class IndexBar extends View {
 
     public void setNorBarBgColor(@ColorInt int norBarBgColor) {
         this.norBarBgColor = norBarBgColor;
+        mBarBgPaint.setColor(norBarBgColor);
     }
 
     public int getSelBarBgColor() {
@@ -168,5 +169,6 @@ public class IndexBar extends View {
 
     public void setSelBarBgColor(@ColorInt int selBarBgColor) {
         this.selBarBgColor = selBarBgColor;
+
     }
 }
