@@ -34,7 +34,7 @@ public class IndexLayout extends FrameLayout {
     private boolean isShowCircle;
     private String indexName = "";
     private IndexBar indexBar;
-    private int indexBarWidth = dp2px(50);
+    private int indexBarWidth = dp2px(30);
     private float indexBarHeightRatio = 1;
 
     public IndexLayout(Context context) {

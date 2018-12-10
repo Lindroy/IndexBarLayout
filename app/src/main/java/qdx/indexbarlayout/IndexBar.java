@@ -79,13 +79,15 @@ public class IndexBar extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        //先绘制背景
+        canvas.drawRoundRect(mIndexBarBg, mIndexBarBgRadius, mIndexBarBgRadius, mBarBgPaint);
+        //再绘制文字
         if (indexsList != null && indexsList.size() > 0) {
             for (int i = 0; i < indexsList.size(); i++) {
                 canvas.drawText(indexsList.get(i), getWidth() / 2, textSpan * (i + 1) + yAxis, mPaint);
             }
         }
-        //绘制背景
-        canvas.drawRoundRect(mIndexBarBg, mIndexBarBgRadius, mIndexBarBgRadius, mBarBgPaint);
+
 
     }
 
@@ -143,11 +145,11 @@ public class IndexBar extends View {
         mPaint.setTextSize(textSize);
     }
 
-    public void setSelTextColor(int selTextColor) {
+    public void setSelTextColor(@ColorInt int selTextColor) {
         this.selTextColor = selTextColor;
     }
 
-    public void setNorTextColor(int norTextColor) {
+    public void setNorTextColor(@ColorInt int norTextColor) {
         this.norTextColor = norTextColor;
         mPaint.setColor(norTextColor);
     }
